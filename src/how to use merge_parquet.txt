@@ -1,0 +1,1 @@
+python src/merge_parquet.py --input-dir "Wind Farm A" --output-dir "Wind Farm A" --part1-name "partie1.parquet" --part2-name "partie2.parquet" --output-name "combined_data.parquet"

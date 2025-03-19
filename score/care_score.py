@@ -22,7 +22,7 @@ class AnomalyEvent:
     def is_detected(self) -> bool:
         """Vérifie si l'événement est détecté (au moins une prédiction positive)."""
         return 1 in self.predictions
-    
+
 class EventDetector:
     """Classe utilitaire pour détecter des événements d'anomalie dans une série temporelle."""
 
@@ -86,7 +86,7 @@ class EventDetector:
                 previous_end = end_idx
 
         return events
-    
+
 class Coverage:
     """
     Calcule le score de Coverage pour un modèle de détection d'anomalies.
@@ -158,7 +158,8 @@ class Coverage:
         if filtered_df.empty:
             print("Attention: Aucun point de données avec des anomalies trouvé pour le calcul du Coverage.")
             return 0.0
-
+        # Ensure anomaly_results has the same index as filtered_df
+        anomaly_results = anomaly_results.reindex(filtered_df.index)
         # Extraire les vérités terrain et les prédictions
         ground_truth = np.ones(len(filtered_df))  # Tous les points sont des anomalies par définition
         predictions = anomaly_results.loc[filtered_df.index, 'anomaly'].astype(int).values
@@ -495,10 +496,6 @@ class Reliability:
         plt.show()
 
 
-
-
-
-
 class Earliness:
     """
     Calcule le score d'Earliness pour un modèle de détection d'anomalies.
@@ -525,25 +522,25 @@ class Earliness:
         return weights
 
     def _calculate_weighted_score(self, event: AnomalyEvent) -> float:
-        """
-        Calcule le score pondéré (WS) pour un événement d'anomalie.
+            """
+            Calcule le score pondéré (WS) pour un événement d'anomalie.
 
-        Args:
-            event: Objet AnomalyEvent contenant les informations sur l'événement
+            Args:
+                event: Objet AnomalyEvent contenant les informations sur l'événement
 
-        Returns:
-            Score pondéré calculé
-        """
-        if not event.is_detected():
-            return 0.0
+            Returns:
+                Score pondéré calculé
+            """
+            if not event.is_detected():
+                return 0.0
+            
+            # Correction : Utiliser la longueur réelle de event.predictions
+            weights = self._calculate_weights(len(event.predictions))
 
-        # Calculer les poids pour cet événement
-        weights = self._calculate_weights(event.length)
+            # Calculer le score pondéré
+            weighted_score = np.sum(weights * np.array(event.predictions)) / np.sum(weights)
 
-        # Calculer le score pondéré
-        weighted_score = np.sum(weights * np.array(event.predictions)) / np.sum(weights)
-
-        return weighted_score
+            return weighted_score
 
     def calculate_earliness_score(self, df: pd.DataFrame, anomaly_results: pd.DataFrame) -> float:
         """
@@ -776,33 +773,5 @@ class CAREScore:
         plt.tight_layout()
         plt.show()
 
-def main():
-    """
-    Fonction principale pour démontrer l'utilisation des métriques d'évaluation.
-    """
-    # Cette fonction servirait à démontrer l'utilisation des classes ci-dessus
-    # sur un ensemble de données réel. Par exemple:
-
-    # 1. Charger les données et les prédictions
-    # df = pd.read_csv('path_to_data.csv')
-    # anomaly_results = pd.read_csv('path_to_predictions.csv')
-
-    # 2. Calculer les scores
-    # care_calculator = CAREScore()
-    # scores = care_calculator.calculate_care_score(df, anomaly_results)
-
-    # 3. Afficher les résultats
-    # print(f"Score CARE: {scores['care']:.4f}")
-    # print(f"  Coverage: {scores['coverage']:.4f}")
-    # print(f"  Accuracy: {scores['accuracy']:.4f}")
-    # print(f"  Reliability: {scores['reliability']:.4f}")
-    # print(f"  Earliness: {scores['earliness']:.4f}")
-
-    # 4. Visualiser les scores
-    # care_calculator.visualize_care_score(scores)
-
-    pass
 
 
-if __name__ == "__main__":
-    main()

@@ -5,6 +5,12 @@
 ## Project Overview
 This project implements advanced predictive maintenance techniques for wind turbines using SCADA data. By leveraging machine learning and deep learning approaches, we aim to detect potential failures before they occur, reducing downtime and maintenance costs.
 
+## Dataset
+The analysis is based on the "Wind Turbine SCADA Data For Early Fault Detection" dataset:
+- **Download Link**: [Zenodo Repository](https://zenodo.org/records/14006163)
+- Contains time-series SCADA data with labeled fault events
+- Includes multiple sensor readings from operational wind turbines
+
 ## Repository Structure
 
 ### 📁 src/

@@ -1,61 +1,107 @@
-# Wind Turbine Predictive Maintenance
+# Wind Turbine Predictive Maintenance System
 
-This repository contains code for predictive maintenance of wind turbines based on SCADA data, inspired by the paper "CARE to Compare: A Real-World Benchmark Dataset for Early Fault Detection in Wind Turbine Data".
+![Wind Turbine Maintenance](https://via.placeholder.com/800x200.png?text=Wind+Turbine+Predictive+Maintenance)
 
-## Description
-
-This project aims to implement early fault detection algorithms for wind turbines using real-world SCADA data. The goal is to detect potential failures before they occur, reducing downtime and maintenance costs.
+## Project Overview
+This project implements advanced predictive maintenance techniques for wind turbines using SCADA data. By leveraging machine learning and deep learning approaches, we aim to detect potential failures before they occur, reducing downtime and maintenance costs.
 
 ## Repository Structure
 
-The repository is organized as follows:
+### 📁 src/
+Core Python modules for data processing:
+- Data loading and preprocessing utilities
+- Feature engineering pipelines
+- Data splitting and transformation tools
 
-- `src/`: Contains the Python scripts for data loading, preprocessing, and model training
-- `notebooks/`: Jupyter notebooks for exploratory data analysis and visualization
-- `models/`: Saved trained models
-- `results/`: Performance metrics and visualizations
+### 📁 model/
+Machine learning implementations:
+- Multiple anomaly detection approaches
+- Model checkpoints and configurations
+- Evaluation notebooks and scripts
 
-## Prerequisites
+### 📁 data_analysis/
+Exploratory data analysis tools:
+- Statistical profiling scripts
+- Visualization utilities
+- Correlation analysis
 
-Before starting, make sure you have installed:
+### 📁 Wind Farm A/
+Dataset and metadata:
+- SCADA time-series data
+- Event information with anomaly labels
+- Sensor descriptions and specifications
 
-- Python 3.8 or higher
-- Required Python libraries:
-  ```
-  pip install pandas numpy scikit-learn matplotlib seaborn tensorflow
-  ```
+## Model Architecture
 
-## Getting Started
+### 🧠 Anomaly Detection Approaches
 
-To use this repository:
+#### Deep Learning Models
+- **LSTM Autoencoder**: Captures temporal dependencies in sequential data, reconstructing normal patterns to identify anomalies
+- **Variational Autoencoder (VAE)**: Probabilistic approach that learns latent space representations of normal operation
 
-1. Clone this repository:
-   ```
-   git clone https://github.com/mohamedchnafy-ds/predective-maintenance.git
-   cd predective-maintenance
-   ```
+#### Traditional Machine Learning
+- **Isolation Forest**: Efficiently isolates anomalies through recursive partitioning
+- **Random Forest Feature Selection**: Identifies most important features for anomaly detection
 
-2. Download the wind farm dataset and place it in the appropriate directory.
+### 📉 Dimensionality Reduction Techniques
+- **Principal Component Analysis (PCA)**: Linear dimensionality reduction preserving variance
+- **Feature Selection with Random Forest**: Importance-based feature filtering
 
-3. Run the data loader to prepare the dataset:
-   ```
-   python src/data_loader.py
-   ```
+## Implementation Strategy
 
-## The CARE Score
+### Data Processing Pipeline
+```
+Raw SCADA Data → Preprocessing → Feature Selection → Model Training → Anomaly Detection → Performance Evaluation
+```
 
-The CARE score is a comprehensive evaluation method that considers four key aspects of a high-quality early fault detection model for predictive maintenance:
+## Key Features
 
-- **Coverage**: The ability to detect many anomalies
-- **Accuracy**: The ability to correctly recognize normal behavior
-- **Reliability**: The ability to minimize false alarms
-- **Earliness**: The ability to detect anomalies as early as possible
+### Early Fault Detection
+- Detection of anomalies 7-14 days before failure
+- Component-specific anomaly identification
+- Confidence scoring for maintenance prioritization
 
-## Contributing
+### Performance Metrics
+- CARE Score (Coverage, Accuracy, Reliability, Earliness)
 
-Contributions to this repository are welcome. If you find errors, potential improvements, or wish to add new models or analyses, please submit a pull request.
+## Installation and Usage
+
+### Prerequisites
+```bash
+pip install -r requirements.txt
+```
+
+### Data Preparation
+```python
+# Load and preprocess data
+from src.data_loader import WindFarmDataLoader
+loader = WindFarmDataLoader(base_path)
+data = loader.load_datasets()
+```
+
+### Model Training
+```python
+# Train LSTM Autoencoder
+from model.lstm_autoencoder import build_model
+model = build_model(input_shape=(sequence_length, num_features))
+model.fit(train_generator, epochs=50, validation_data=val_generator)
+```
+
+### Anomaly Detection
+```python
+# Calculate reconstruction error
+reconstruction_error = model.predict(test_data)
+anomaly_scores = calculate_anomaly_scores(test_data, reconstruction_error)
+```
+
+## Future Work
+- Integration with real-time SCADA systems
+- Multi-component failure prediction
+- Transfer learning for cross-turbine application
+- Explainable AI integration for maintenance decision support
 
 ## References
-
-- Gück, C.; Roelofs, C.M.A.; Faulstich, S. CARE to Compare: A Real-World Benchmark Dataset for Early Fault Detection in Wind Turbine Data. Data 2024, 9, 138. https://doi.org/10.3390/data9120138
-- Dataset: https://doi.org/10.5281/zenodo.14006163
+- CARE Benchmark Dataset methodology
+- TensorFlow and PyTorch documentation
+- Anomaly detection research papers
+```

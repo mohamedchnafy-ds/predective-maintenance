@@ -1,7 +1,7 @@
 # Wind Turbine Predictive Maintenance System
 
-![Wind Turbine Maintenance](https://via.placeholder.com/800x200.png?text=Wind+Turbine+Predictive+Maintenance)
 
+![Wind Turbine Maintenance](https://www.acciona.com.au/content/dam/accionaau/media/igamrjsj/renewables.jpg)
 ## Project Overview
 This project implements advanced predictive maintenance techniques for wind turbines using SCADA data. By leveraging machine learning and deep learning approaches, we aim to detect potential failures before they occur, reducing downtime and maintenance costs.
 

@@ -104,4 +104,11 @@ anomaly_scores = calculate_anomaly_scores(test_data, reconstruction_error)
 - CARE Benchmark Dataset methodology
 - TensorFlow and PyTorch documentation
 - Anomaly detection research papers
+
+## Collaborators
+- AJIBADE Abdulmalik
+- BERETE Abdrahamane
+- CHNAFY Mohamed
+- DAH Abdallahi
+- IGBINE Anita
 ```
